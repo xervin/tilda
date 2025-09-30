@@ -63,11 +63,17 @@ class TArray
     }
 }
 
-
+ob_start();
 try {
     $tArray = new TArray(5, 7, 100);
     $tArray->print();
 } catch (Exception $e) {
     echo $e->getMessage();
 }
+$stream = ob_get_clean();
 
+if (PHP_SAPI === 'cli') {
+    echo $stream;
+} else {
+    echo "<pre>$stream</pre>";
+}

@@ -3,7 +3,7 @@
 /**
  * @throws Exception
  */
-function ladder(int $steps)
+function ladder(int $steps): void
 {
     if ($steps < 1) {
         throw new Exception("Нам не нужны лестницы с количеством ступеней меньше $steps");
@@ -20,4 +20,16 @@ function ladder(int $steps)
     }
 }
 
-ladder(100);
+ob_start();
+try {
+    ladder(100);
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
+$stream = ob_get_clean();
+
+if (PHP_SAPI === 'cli') {
+    echo $stream;
+} else {
+    echo "<pre>$stream</pre>";
+}
